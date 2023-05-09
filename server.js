@@ -18,6 +18,8 @@ app.listen(PORT, () => {
 const OPEN_API_KEY = process.env.OPEN_API_KEY
 
 app.post('/completions', async (req, res) => {
+    console.log('Request body:', req.body); // Log the request body
+    console.log('Message:', req.body.message); // Log the message
 
     const options = {
         method: 'POST',
@@ -27,7 +29,7 @@ app.post('/completions', async (req, res) => {
         },
         body: JSON.stringify({
             model : 'gpt-4',
-            messages: [{role: "user", content: "How are you?"}],
+            messages: [{ role: 'user', content: req.body.message }], 
             max_tokens: 150,
 
         })
