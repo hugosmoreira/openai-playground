@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-const dotenv = require('dotenv')
+import dotenv from 'dotenv'
+import fetch from 'node-fetch'
+dotenv.config()
 const PORT = 8000
-const express = require('express')
-const cors = require('cors')
+import express, { json } from 'express'
+import cors from 'cors'
 const app = express()
 
-app.use(express.json())
+app.use(json())
 app.use(cors())
 
 app.listen(PORT, () => {
@@ -15,7 +17,7 @@ app.listen(PORT, () => {
 
 const OPEN_API_KEY = process.env.OPEN_API_KEY
 
-app.post('completions', async (req, res) => {
+app.post('/completions', async (req, res) => {
 
     const options = {
         method: 'POST',
@@ -30,7 +32,6 @@ app.post('completions', async (req, res) => {
 
         })
     }
-
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', options)
