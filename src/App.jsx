@@ -1,4 +1,5 @@
-import { useState } from 'react'
+/* eslint-disable no-unused-vars */
+import { useEffect, useState } from 'react'
 
 
 
@@ -8,6 +9,8 @@ function App() {
   const [inputValue, setInputValue] = useState('')
   // eslint-disable-next-line no-unused-vars
   const [message, setMessage] = useState(null)
+  const [ previousChats, setPreviousChats ] = useState([])
+  const [ currentTitle, setCurrentTitle ] = useState([])
 
   const getMessages = async () => {
     const options = {
@@ -31,8 +34,37 @@ function App() {
       console.log(error)
     }
   }
+
+  useEffect(() => { 
+    console.log(currentTitle, inputValue, message)
+    if (!currentTitle && inputValue && message) {
+      setCurrentTitle(inputValue)
+    }
+    if (currentTitle && inputValue && message) {
+        setPreviousChats(prevChats => (
+          [...prevChats, 
+            {
+            title: currentTitle,
+            role: 'user',
+            content: inputValue   
+          },
+          {
+            role: message.role,
+            content: message.content
+          }
+        
+        
+        ]
+        ))
+    }
+  }, [message, currentTitle])
+
+  console.log(previousChats)
+
+
+
   
-  console.log(message)
+  
 
   return (
     <div className='app'>
@@ -44,7 +76,7 @@ function App() {
         </nav>
       </section>
       <section className='main'>
-        <h1>Hugo-GPT</h1>
+        {! currentTitle && <h1>Hugo-GPT</h1>}
         <ul className="feed">
 
         </ul>
