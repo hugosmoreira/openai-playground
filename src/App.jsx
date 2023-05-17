@@ -10,7 +10,21 @@ function App() {
   // eslint-disable-next-line no-unused-vars
   const [message, setMessage] = useState(null)
   const [ previousChats, setPreviousChats ] = useState([])
-  const [ currentTitle, setCurrentTitle ] = useState([])
+  const [ currentTitle, setCurrentTitle ] = useState(null)
+
+
+  const createNewChat = () => {
+    setMessage(null)
+    setInputValue("")
+    setCurrentTitle(null)
+  }
+
+
+  const handleClick = (uniqueTitle) => {
+    setCurrentTitle(uniqueTitle)
+    setMessage(null)
+    setInputValue("")
+  }
 
   const getMessages = async () => {
     const options = {
@@ -49,6 +63,7 @@ function App() {
             content: inputValue   
           },
           {
+            title: currentTitle,
             role: message.role,
             content: message.content
           }
@@ -61,6 +76,12 @@ function App() {
 
   console.log(previousChats)
 
+  const currentChat = previousChats.filter(previousChats => previousChats.title === currentTitle)
+  const uniqueTitles = Array.from(new Set(previousChats.map(previousChats => previousChats.title)))
+  console.log(uniqueTitles)
+
+
+
 
 
   
@@ -69,8 +90,10 @@ function App() {
   return (
     <div className='app'>
       <section className='side-bar'>
-        <button className='button'>+ New Chat</button>
-        <ul className='history'></ul>
+        <button className='button' onClick={createNewChat}>+ New Chat</button>
+        <ul className='history'>
+          {uniqueTitles.map((uniqueTitle, index) => <li key={index} onClick={() => handleClick(uniqueTitle)}>{uniqueTitle}</li>)}
+        </ul>
         <nav>
           <p>Hugosmr</p>
         </nav>
@@ -78,7 +101,10 @@ function App() {
       <section className='main'>
         {! currentTitle && <h1>Hugo-GPT</h1>}
         <ul className="feed">
-
+          {currentChat?.map((chatMessage, index) => <li key={index}>
+            <p className='role'>{chatMessage.role}</p>
+            <p>{chatMessage.content}</p>
+          </li>) }
         </ul>
         <div className="bottom-section">
           <div className="input-container">
