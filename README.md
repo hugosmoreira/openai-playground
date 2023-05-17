@@ -15,39 +15,35 @@ Prerequisites
 You need Node.js and npm installed on your machine. To check if you have Node.js installed, run this command in your terminal:
 
 bash
-Copy code
+
 node -v
 To confirm that you have npm installed, run:
 
-bash
-Copy code
+
+
 npm -v
 Installing
 Clone the repository:
 
-bash
-Copy code
+
+
 git clone https://github.com/hugosmoreira/openai-playground.git
 Navigate to the project folder:
 
-bash
-Copy code
+
+
 cd openai-playground
 Install the project dependencies:
 
-bash
-Copy code
 npm install
 Running the application
 First, start the backend server:
 
-bash
-Copy code
+
 npm run start:backend
 In a new terminal window, start the React development server:
 
-bash
-Copy code
+
 npm run dev
 The application should now be running at http://localhost:3000.
 
